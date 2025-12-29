@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Water Jug Problem – International Teaching Simulation</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #e3f2fd, #f8fbff);
+    color: #263238;
+    text-align: center;
+}
+
+.wrapper {
+    max-width: 900px;
+    margin: 30px auto;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 36px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+/* ===== TITLE ===== */
+h1 {
+    font-size: 46px;
+    font-weight: 900;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #0d47a1, #42a5f5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+        0 4px 12px rgba(13,71,161,0.35),
+        0 0 18px rgba(66,165,245,0.25);
+}
+
+/* ===== TARGET BADGE ===== */
+.subtitle {
+    display: inline-block;
+    margin: 18px auto 32px;
+    padding: 12px 36px;
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    border-radius: 50px;
+    box-shadow:
+        0 12px 28px rgba(245,124,0,0.55),
+        inset 0 0 12px rgba(255,255,255,0.25);
+    animation: popIn 0.8s ease-out;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    80% { transform: scale(1.08); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ===== JUG AREA ===== */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 70px;
+    margin-top: 30px;
+}
+
+/* ===== JUG ===== */
+.jug {
+    width: 120px;
+    position: relative;
+    background: #ffffff;
+    border: 5px solid #263238;
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.18);
+}
+
+.jug-8 { height: 320px; }
+.jug-5 { height: 200px; }
+.jug-3 { height: 120px; }
+
+.jug-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 0 0 18px 18px;
+}
+
+/* ===== WATER ===== */
+.water {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, #0288d1, #4fc3f7);
+    transition: height 1.2s ease, background 0.8s;
+    border-radius: 0 0 14px 14px;
+}
+
+/* ===== SUCCESS WATER ONLY ===== */
+.success-water {
+    background: linear-gradient(to top, #2e7d32, #66bb6a);
+}
+
+/* ===== VOLUME TEXT ===== */
+.volume {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 26px;
+    font-weight: 800;
+    color: #0d47a1;
+    text-shadow: 0 2px 6px rgba(255,255,255,0.9);
+    pointer-events: none;
+}
+
+/* ===== LABEL ===== */
+.label {
+    margin-top: 14px;
+    font-weight: 700;
+    font-size: 20px;
+    color: #0d47a1;
+}
+
+/* ===== INFO BOX ===== */
+.info {
+    margin: 30px auto 0;
+    max-width: 600px;
+    padding: 24px;
+    background: linear-gradient(135deg, #e3f2fd, #f5faff);
+    border: 2px solid #2196f3;
+    border-radius: 14px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #0d47a1;
+}
+
+/* ===== BUTTON ===== */
+button {
+    margin-top: 30px;
+    padding: 16px 44px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 40px;
+    background: linear-gradient(135deg, #42a5f5, #1565c0);
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(21,101,192,0.45);
+}
+button:hover {
+    transform: translateY(-3px);
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+    <h1>💧 Water Jug Puzzle</h1>
+    <div class="subtitle">Target 4L</div>
+
+    <div class="container">
+        <div>
+            <div class="jug jug-8">
+                <div class="jug-inner">
+                    <div class="water" id="water8"></div>
+                    <div class="volume" id="v8"></div>
+                </div>
+            </div>
+            <div class="label">Jug 8L</div>
+        </div>
+
+        <div>
+            <div class="jug jug-5">
+                <div class="jug-inner">
+                    <div class="water" id="water5"></div>
+                    <div class="volume" id="v5"></div>
+                </div>
+            </div>
+            <div class="label">Jug 5L</div>
+        </div>
+
+        <div>
+            <div class="jug jug-3">
+                <div class="jug-inner">
+                    <div class="water" id="water3"></div>
+                    <div class="volume" id="v3"></div>
+                </div>
+            </div>
+            <div class="label">Jug 3L</div>
+        </div>
+    </div>
+
+    <div class="info" id="info"></div>
+    <button onclick="start()">▶ Start</button>
+</div>
+
+<script>
+const steps = [
+    { a:8, b:0, c:0, text:"The 8-liter jug is full." },
+    { a:3, b:5, c:0, text:"Step 1: Pour water from the 8L jug into the 5L jug." },
+    { a:3, b:2, c:3, text:"Step 2: Pour water from the 5L jug into the 3L jug." },
+    { a:6, b:2, c:0, text:"Step 3: Pour water from the 3L jug into the 8L jug." },
+    { a:6, b:0, c:2, text:"Step 4: Pour water from the 5L jug into the 3L jug." },
+    { a:1, b:5, c:2, text:"Step 5: Pour water from the 8L jug into the 5L jug." },
+    { a:1, b:4, c:3, text:"Step 6: Pour water from the 5L jug into the 3L jug." }
+];
+
+let i = 0;
+
+function setWater(id, value, max) {
+    document.getElementById(id).style.height = (value / max * 100) + "%";
+}
+
+function clearSuccess() {
+    water5.classList.remove("success-water");
+}
+
+function showStep(step, isLast=false) {
+    clearSuccess();
+
+    setWater("water8", step.a, 8);
+    setWater("water5", step.b, 5);
+    setWater("water3", step.c, 3);
+
+    v8.innerText = step.a + "L";
+    v5.innerText = step.b + "L";
+    v3.innerText = step.c + "L";
+
+    info.innerHTML = `<b>${step.text}</b><br>
+    State: (8L=${step.a}, 5L=${step.b}, 3L=${step.c})`;
+
+    if (isLast) {
+        setTimeout(() => {
+            water5.classList.add("success-water");
+        }, 800);
+    }
+}
+
+function start() {
+    i = 0;
+    showStep(steps[0]);
+
+    const timer = setInterval(() => {
+        i++;
+        if (i >= steps.length) {
+            clearInterval(timer);
+            showStep(steps[steps.length - 1], true);
+            return;
+        }
+        showStep(steps[i]);
+    }, 2600);
+}
+
+showStep(steps[0]);
+</script>
+
+</body>
+</html>
