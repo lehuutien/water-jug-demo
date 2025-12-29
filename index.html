@@ -218,7 +218,7 @@ button {
     </div>
 
     <div class="info" id="info"></div>
-    <button onclick="start()">▶ Start</button>
+    <button onclick="start()">▶ Result</button>
 </div>
 
 <script>
@@ -229,7 +229,7 @@ const steps = [
     { a:6, b:2, c:0, text:"3L → 8L" },
     { a:6, b:0, c:2, text:"5L → 3L" },
     { a:1, b:5, c:2, text:"8L → 5L" },
-    { a:1, b:4, c:3, text:"🎯 Got exactly 4 liters!" }
+    { a:1, b:4, c:3, text:"5L → 3L" } // BƯỚC CUỐI
 ];
 
 let i = 0;
@@ -255,11 +255,6 @@ function showStep(step) {
     v3.innerText = step.c + "L";
 
     info.innerText = step.text;
-
-    if (step.b === 4) {
-        water5.classList.add("success-water");
-        info.classList.add("success");
-    }
 }
 
 function start() {
@@ -268,13 +263,32 @@ function start() {
 
     const t = setInterval(() => {
         i++;
-        if (i >= steps.length) {
+
+        // 👉 HIỂN THỊ BƯỚC CUỐI
+        if (i === steps.length - 1) {
+            showStep(steps[i]);
             clearInterval(t);
+
+            // ⏱️ CHỜ 0.5s RỒI MỚI KẾT THÚC
+            setTimeout(() => {
+                water5.classList.add("success-water");
+                info.classList.add("success");
+
+                // 🎯 LÚC NÀY MỚI HIỆN CHỮ KẾT THÚC
+                info.innerText = "🎯 Got exactly 4 liters!";
+            }, 1800);
+
             return;
         }
-        showStep(steps[i]);
+
+        // 👉 CÁC BƯỚC TRƯỚC
+        if (i < steps.length) {
+            showStep(steps[i]);
+        }
+
     }, 2200);
 }
+
 
 showStep(steps[0]);
 </script>
