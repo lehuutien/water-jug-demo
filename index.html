@@ -114,26 +114,39 @@ h1 {
     text-align: center;
 }
 
-/* ===== INFO (ĐỔI BACKGROUND) ===== */
+/* ===== INFO – RÕ & NỔI HƠN ===== */
 .info {
-    margin-top: 10px;
-    padding: 14px;
+    margin-top: 12px;
+    padding: 16px 14px;
     width: 100%;
-    border-radius: 14px;
-    font-size: 16px;
+    border-radius: 16px;
+
+    font-size: 18px;
     font-weight: 900;
     text-align: center;
-    color: #ff9800;
-    background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
-    border: 2px solid #4fc3f7;
-    transition: background 0.4s, color 0.4s;
+    letter-spacing: 0.3px;
+
+    color: #ffffff;
+    background: linear-gradient(135deg, #1976d2, #0d47a1);
+
+    border: 2px solid #64b5f6;
+    box-shadow:
+        0 6px 18px rgba(13,71,161,0.45),
+        inset 0 0 12px rgba(255,255,255,0.15);
+
+    text-shadow:
+        0 2px 6px rgba(0,0,0,0.45);
 }
 
-/* INFO KHI THÀNH CÔNG */
+/* ===== INFO KHI THÀNH CÔNG ===== */
 .info.success {
-    background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
-    color: #1b5e20;
-    border-color: #2e7d32;
+    background: linear-gradient(135deg, #2e7d32, #1b5e20);
+    border-color: #81c784;
+    box-shadow:
+        0 0 22px rgba(46,125,50,0.8),
+        inset 0 0 14px rgba(255,255,255,0.2);
+
+    color: #ffffff;
 }
 
 /* ===== BUTTON ===== */
@@ -200,7 +213,7 @@ const steps = [
     { a:6, b:2, c:0, text:"3L → 8L" },
     { a:6, b:0, c:2, text:"5L → 3L" },
     { a:1, b:5, c:2, text:"8L → 5L" },
-    { a:1, b:4, c:3, text:"🎯 Got exactly 4L!" }
+    { a:1, b:4, c:3, text:"🎯 Got exactly 4 liters!" }
 ];
 
 let i = 0;
@@ -227,7 +240,6 @@ function showStep(step) {
 
     info.innerText = step.text;
 
-    /* ĐỔI MÀU NGAY KHI 5L = 4L */
     if (step.b === 4) {
         water5.classList.add("success-water");
         info.classList.add("success");
